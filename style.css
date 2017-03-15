@@ -1,0 +1,32 @@
+#startButton{
+	width: 500px;
+	height: 200px;
+}
+
+#parent{
+	width: 1100px;
+	height: 600px;
+	background-color: green;
+}
+
+#scoreboard{
+	width:1100px;
+	height: 25px;
+	background-color: pink;
+}
+
+#panorama{
+	width:500px;
+	height: 500px;
+	background-color: red;
+	margin-top: 50px;
+	margin-left: 25px;
+}
+
+#map{
+	width: 500px;
+	height: 500px;
+	background-color: blue;
+	margin-top: 50px;
+	margin-right: 25px;
+}
