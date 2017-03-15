@@ -1,5 +1,8 @@
 $(function(){
 	$("#parent").hide();
+	$("#win").hide();
+	$("#lose").hide();
+	$("#lives").html("Lives: " + GUESSES);
 });
 
 $("#startButton").click(function(){
@@ -26,9 +29,8 @@ function initMap(){
         });
         map2.addListener('click', function(event){
         	if(markers.length < GUESSES){
-        		console.log(event);
-        		console.log(map2);
       			addMarker(event.latLng);
+      			$("#lives").html("Lives: " + (GUESSES - markers.length));
       		}else{
       			determineWin();
       		}
@@ -88,9 +90,12 @@ function initMap(){
       	});
       	marker.setMap(map2);
       	markers.push(marker);
-      	console.log(markers[0].getPosition());
+      	markers[0].getPosition().lat();
       }
 
 function determineWin(){
-
+	var rangeLat = target.lat - markers[0].getPosition().lat();
+	var rangeLng = target.lng - markers[0].getPosition().lng();
+	var distance = Math.sqrt(Math.pow(rangeLat, 2) + Math.pow(rangeLng, 2));
+	console.log(distance);
 }

@@ -30,3 +30,15 @@
 	margin-top: 50px;
 	margin-right: 25px;
 }
+
+#win {
+	width: 1100px;
+	height: 600px;
+	background-color: blue;
+}
+
+#lose {
+	width: 1100px;
+	height: 600px;
+	background-color: red;
+}
