@@ -13,6 +13,26 @@ $("#startButton").click(function(){
 
 });
 
+$("#lose").find("#restart").click(function(){
+	$("#win").hide();
+	$("#lose").hide();
+	$("#parent").show();
+	markers = [];
+	initMap();
+	getRandom();
+	
+});
+
+$("#win").find("#restart").click(function(){
+	$("#win").hide();
+	$("#lose").hide();
+	$("#parent").show();
+	markers = [];
+	initMap();
+	getRandom();
+	
+});
+
 var panorama;
 var map;
 var map2;
@@ -27,13 +47,16 @@ function initMap(){
           center: {lat:37.09024, lng:-95.712891},
           zoom: 3
         });
+        $("#lives").html("Lives: " + (GUESSES - markers.length));
         map2.addListener('click', function(event){
         	if(markers.length < GUESSES){
       			addMarker(event.latLng);
       			$("#lives").html("Lives: " + (GUESSES - markers.length));
-      		}else{
-      			determineWin();
+      			if(markers.length == GUESSES){
+      				determineWin();
+      			}
       		}
+      		
      	 });
 }
 
@@ -94,8 +117,34 @@ function initMap(){
       }
 
 function determineWin(){
-	var rangeLat = target.lat - markers[0].getPosition().lat();
-	var rangeLng = target.lng - markers[0].getPosition().lng();
-	var distance = Math.sqrt(Math.pow(rangeLat, 2) + Math.pow(rangeLng, 2));
+	var distance = getDistance(markers[0].getPosition(), target);
 	console.log(distance);
+	$("#parent").hide();
+	if(distance < 643738){
+		$("#win").show();
+		$("#win").find("#results").html("Your guess was " + miles(distance) + " miles away.");
+	}else{
+		$("#lose").show();
+		$("#lose").find("#results").html("Your guess was " + miles(distance) + " miles away.");
+	}
+}
+
+var rad = function(x) {
+  return x * Math.PI / 180;
+};
+
+var getDistance = function(p1, p2) {
+  var R = 6378137; // Earth’s mean radius in meter
+  var dLat = rad(p2.lat - p1.lat());
+  var dLong = rad(p2.lng - p1.lng());
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat)) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d; // returns the distance in meter
+};
+
+var miles = function(m){
+	return m/1609.344;
 }
